@@ -3,7 +3,12 @@ let path = require("path");
 let nodeExternals = require("webpack-node-externals");
 const moduleObj = {
   rules: [
-    { test: /\.(js|jsx)$/, exclude: /node_modules/, loader: "babel-loader" },
+    {
+      test: /\.(js|jsx)$/,
+      exclude: /(node_modules)/,
+      loader: "babel-loader",
+      options: { presets: ["@babel/env"] },
+    },
     {
       test: /\.css$/,
       use: ["style-loader", "css-loader"],
@@ -21,7 +26,7 @@ const client = {
     path: path.resolve(__dirname, "dist/public"),
   },
   module: moduleObj,
-  plugins: [new HtmlWebPackPlugin({ template: "src/client/index.html" })],
+  plugins: [new HtmlWebPackPlugin({ template: "public/index.html" })],
 };
 const server = {
   entry: { server: "./src/server/index.js" },
